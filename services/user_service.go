@@ -5,6 +5,14 @@ import (
 	"github.com/RajatWithGolang/Microservice/utils"
 )
 
-func GetUser(userID int64) (*domain.User, *utils.ApplicationError) {
-	return domain.GetUser(userID)
+type userService struct{}
+
+var UserService userService
+
+func (us *userService) GetUser(userID int64) (*domain.User, *utils.ApplicationError) {
+	user, err := domain.UserDAO.GetUser(userID)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
